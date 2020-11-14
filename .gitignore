@@ -230,3 +230,7 @@ Saved/
 
 # Ignore the headers and cpp files in the clang toolchain on Linux
 Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/**
+
+#
+/Binaries/**
+/Build/**
