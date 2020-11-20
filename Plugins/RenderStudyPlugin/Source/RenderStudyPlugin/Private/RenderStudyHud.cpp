@@ -4,6 +4,7 @@
 #include "Engine/TextureRenderTarget2D.h"
 #include "Engine/LocalPlayer.h"
 #include "GameFramework/PlayerController.h"
+#include "TriangleRendering.h"
 
 ARenderStudyHud::ARenderStudyHud(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -24,6 +25,9 @@ void ARenderStudyHud::DrawHUD()
 	{
 		return;
 	}
+
+	FDrawTriangle FDrawTriangle;
+	FDrawTriangle.Render(RenderTarget);
 
 	FIntPoint IntPoint = LocalPlayer->ViewportClient->Viewport->GetSizeXY();
 

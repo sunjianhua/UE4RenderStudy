@@ -34,10 +34,14 @@ public class RenderStudyPlugin : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
+				"Core",
 				"CoreUObject",
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"RenderCore",
+				"Projects",
+				"RHI",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
