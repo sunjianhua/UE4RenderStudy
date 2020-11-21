@@ -26,7 +26,7 @@ public:
 	void SetParameters(FRHICommandListImmediate& RHICmdList, const TShaderRHIParamRef ShaderRHI);
 
 private:
-	//LAYOUT_FIELD(FShaderParameter, PixelUVSize);
+	LAYOUT_FIELD(FShaderParameter, TestOutColor);
 };
 
 class FTriangleRenderingShaderVS : public FTriangleRenderingShader

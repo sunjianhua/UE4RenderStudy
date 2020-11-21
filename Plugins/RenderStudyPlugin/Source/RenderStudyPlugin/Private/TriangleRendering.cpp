@@ -82,11 +82,17 @@ TGlobalResource<FTriangleIndexBuffer> GTriangleIndexBuffer;
 // FTriangleRenderingShader
 //
 FTriangleRenderingShader::FTriangleRenderingShader(const ShaderMetaType::CompiledShaderInitializerType& Initializer) : FGlobalShader(Initializer)
-{}
+{
+	TestOutColor.Bind(Initializer.ParameterMap, TEXT("TestOutColor"));
+}
 
 template<typename TShaderRHIParamRef>
 void FTriangleRenderingShader::SetParameters(FRHICommandListImmediate& RHICmdList, const TShaderRHIParamRef ShaderRHI)
-{}
+{
+	FLinearColor NewColorValue(1.f, 0.f, 0.f, 1.f);
+
+	SetShaderValue(RHICmdList, ShaderRHI, TestOutColor, NewColorValue);
+}
 
 //
 // IMPLEMENT_SHADER_TYPE
@@ -135,7 +141,7 @@ void DrawTriangle_RenderThread(FRHICommandListImmediate& RHICmdList, class FText
 	RHICmdList.TransitionResource(EResourceTransitionAccess::EWritable, RenderTargetTexture);
 
 	FRHIRenderPassInfo RPInfo(RenderTargetTexture, ERenderTargetActions::DontLoad_Store, OutTextureRenderTargetResource->TextureRHI);
-	RHICmdList.BeginRenderPass(RPInfo, TEXT("DrawUVDisplacement"));
+	RHICmdList.BeginRenderPass(RPInfo, TEXT("DrawTriangle"));
 	{
 		FIntPoint DisplacementMapResolution(OutTextureRenderTargetResource->GetSizeX(), OutTextureRenderTargetResource->GetSizeY());
 
@@ -166,13 +172,8 @@ void DrawTriangle_RenderThread(FRHICommandListImmediate& RHICmdList, class FText
 			0, 0, 0.f,
 			OutTextureRenderTargetResource->GetSizeX(), OutTextureRenderTargetResource->GetSizeY(), 1.f);
 
-		// Update shader uniform parameters.
-		//VertexShader->SetParameters(RHICmdList, VertexShader.GetVertexShader(), CompiledCameraModel, DisplacementMapResolution);
-		//PixelShader->SetParameters(RHICmdList, PixelShader.GetPixelShader(), CompiledCameraModel, DisplacementMapResolution);
-
-		// Draw grid.
-		// uint32 PrimitiveCount = kGridSubdivisionX * kGridSubdivisionY * 2;
-		// RHICmdList.DrawPrimitive(0, PrimitiveCount, 1);
+		// VertexShader->SetParameters(RHICmdList, VertexShader.GetVertexShader());
+		PixelShader->SetParameters(RHICmdList, PixelShader.GetPixelShader());
 
 		// Set VertextBuffer
 		RHICmdList.SetStreamSource(0, GTriangleVertexBuffer.VertexBufferRHI, 0);
