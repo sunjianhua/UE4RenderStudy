@@ -6,6 +6,7 @@
 #include "SceneInterface.h"
 #include "RHIStaticStates.h"
 #include "PipelineStateCache.h"
+#include "ShaderParameterUtils.h"
 
 //
 // 三角形数据描述 相关
